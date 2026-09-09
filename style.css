@@ -19,12 +19,16 @@
     --transicao: all 0.3s ease;
 }
 
+html {
+    font-size: 16px; /* base para usar rem */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bege);
     background-image: url('imagens/fundo.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--texto);
@@ -35,7 +39,7 @@ body {
     position: relative;
 }
 
-/* Overlay escuro para melhorar a legibilidade */
+/* Overlay escuro para melhorar legibilidade */
 body::before {
     content: '';
     position: fixed;
@@ -51,7 +55,7 @@ body::before {
 .header {
     background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-medio) 60%, #3a6b33 100%);
     color: var(--branco);
-    padding: 2.5rem 1rem;
+    padding: 2rem 1rem;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     position: relative;
@@ -71,10 +75,11 @@ body::before {
 .header-content {
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .titulo-principal {
-    font-size: 2.8rem;
+    font-size: clamp(1.8rem, 5vw, 2.8rem); /* responsivo */
     font-weight: 700;
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
@@ -82,7 +87,7 @@ body::before {
 }
 
 .subtitulo {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.3rem);
     font-weight: 300;
     opacity: 0.9;
     letter-spacing: 0.5px;
@@ -91,17 +96,17 @@ body::before {
 /* ========== CONTAINER PRINCIPAL ========== */
 .container {
     flex: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
     width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
 }
 
 /* ========== CATÁLOGO / CARDS ========== */
 .catalogo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.8rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
     justify-items: center;
 }
 
@@ -109,18 +114,18 @@ body::before {
     background-color: var(--branco);
     border-radius: 16px;
     box-shadow: var(--sombra);
-    padding: 0;
     text-align: center;
     cursor: pointer;
     transition: var(--transicao);
     width: 100%;
-    max-width: 280px;
+    max-width: 320px;
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
     text-decoration: none;
     color: var(--texto);
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .card::before {
@@ -136,19 +141,22 @@ body::before {
     z-index: 2;
 }
 
-.card:hover {
+.card:hover,
+.card:focus-visible {
     transform: translateY(-10px);
     box-shadow: var(--sombra-hover);
     border-color: var(--dourado);
+    outline: none;
 }
 
-.card:hover::before {
+.card:hover::before,
+.card:focus-visible::before {
     opacity: 1;
 }
 
 .card-imagem-container {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 4 / 3; /* proporção fixa */
     overflow: hidden;
     border-radius: 16px 16px 0 0;
     background-color: #e0d5c5;
@@ -166,21 +174,25 @@ body::before {
 }
 
 .card-corpo {
-    padding: 1.2rem 1rem 1.5rem;
+    padding: 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
 }
 
 .card-nome {
-    font-size: 1.5rem;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
     font-weight: 700;
     color: var(--verde-escuro);
-    margin-bottom: 0.3rem;
+    margin: 0;
 }
 
 .card-cientifico {
     font-style: italic;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #555;
-    margin-bottom: 0.6rem;
+    margin: 0;
 }
 
 .card-classificacao {
@@ -188,29 +200,35 @@ body::before {
     background-color: var(--bege);
     color: var(--verde-medio);
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     padding: 0.3rem 0.8rem;
     border-radius: 30px;
     letter-spacing: 0.5px;
     border: 1px solid var(--dourado-claro);
+    margin-top: auto;
 }
 
 /* ========== PÁGINA DE DETALHES ========== */
 .btn-voltar {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-bottom: 1.5rem;
-    padding: 0.6rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     background-color: var(--verde-medio);
     color: var(--branco);
     text-decoration: none;
     border-radius: 30px;
     font-weight: 600;
     transition: var(--transicao);
+    font-size: 1rem;
 }
 
-.btn-voltar:hover {
+.btn-voltar:hover,
+.btn-voltar:focus-visible {
     background-color: var(--verde-escuro);
     transform: translateX(-5px);
+    outline: none;
 }
 
 .detalhe-erva {
@@ -219,19 +237,20 @@ body::before {
     box-shadow: var(--sombra);
     overflow: hidden;
     border-top: 8px solid var(--dourado);
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .detalhe-imagem {
     width: 100%;
-    height: 350px;
+    aspect-ratio: 16 / 9; /* proporção paisagem */
     object-fit: cover;
     display: block;
 }
 
 .detalhe-conteudo {
-    padding: 2.5rem;
+    padding: 1.5rem;
 }
 
 .detalhe-cabecalho {
@@ -239,7 +258,7 @@ body::before {
 }
 
 .detalhe-titulo {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     font-weight: 700;
     color: var(--verde-escuro);
     margin-bottom: 0.3rem;
@@ -286,7 +305,7 @@ body::before {
 }
 
 .detalhe-secao h2 {
-    font-size: 1.5rem;
+    font-size: clamp(1.3rem, 3vw, 1.5rem);
     color: var(--verde-medio);
     border-bottom: 2px solid var(--dourado-claro);
     padding-bottom: 0.3rem;
@@ -296,6 +315,7 @@ body::before {
 .detalhe-secao p {
     margin-bottom: 0.8rem;
     text-align: justify;
+    font-size: 1rem;
 }
 
 .detalhe-lista {
@@ -333,50 +353,88 @@ body::before {
     background-color: var(--verde-escuro);
     color: var(--branco);
     text-align: center;
-    padding: 1.5rem;
+    padding: 1.2rem;
     font-size: 0.9rem;
     letter-spacing: 0.5px;
+    margin-top: auto;
 }
 
-/* ========== RESPONSIVIDADE ========== */
-@media (max-width: 768px) {
+/* ========== MEDIA QUERIES ========== */
+
+/* Telas muito pequenas (ex.: iPhone SE, 320px) */
+@media (max-width: 360px) {
+    .header {
+        padding: 1.5rem 0.8rem;
+    }
     .titulo-principal {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .subtitulo {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+    .container {
+        padding: 1rem 0.6rem;
     }
     .catalogo {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .card-imagem-container {
-        height: 160px;
+    .card {
+        max-width: 100%;
     }
-    .detalhe-imagem {
-        height: 250px;
+    .card-imagem-container {
+        aspect-ratio: 4 / 3;
     }
     .detalhe-conteudo {
-        padding: 1.8rem 1.2rem;
+        padding: 1.2rem 0.8rem;
     }
     .detalhe-titulo {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
-    .detalhe-secao h2 {
-        font-size: 1.3rem;
+    .btn-voltar {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
     }
 }
 
-@media (max-width: 480px) {
-    .header {
-        padding: 1.8rem 1rem;
+/* Celulares e tablets pequenos (361px – 600px) */
+@media (min-width: 361px) and (max-width: 600px) {
+    .catalogo {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.2rem;
     }
-    .titulo-principal {
-        font-size: 1.6rem;
+    .card {
+        max-width: 100%;
     }
     .card-imagem-container {
-        height: 140px;
+        aspect-ratio: 4 / 3;
     }
-    .card-nome {
-        font-size: 1.3rem;
+    .detalhe-conteudo {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* Tablets (601px – 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .catalogo {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+    }
+    .detalhe-conteudo {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* Notebooks e desktops (acima de 1025px) */
+@media (min-width: 1025px) {
+    .catalogo {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 2rem;
+    }
+    .detalhe-conteudo {
+        padding: 3rem;
+    }
+    .detalhe-imagem {
+        max-height: 450px;
     }
 }
